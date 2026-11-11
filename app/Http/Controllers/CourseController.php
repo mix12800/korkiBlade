@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
 {
@@ -13,7 +14,10 @@ class CourseController extends Controller
      */
     public function index()
     {
-        //
+        $courses = Course::get();
+        if (Auth::user()->role == 'admin') {
+            return view('courses', compact('courses'));
+        }
     }
 
     /**
@@ -29,7 +33,8 @@ class CourseController extends Controller
      */
     public function store(StoreCourseRequest $request)
     {
-        //
+        Course::create($request->all());
+        return redirect()->route('coursesGet');
     }
 
     /**
@@ -61,6 +66,6 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
-        //
+        return $course;
     }
 }

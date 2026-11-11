@@ -1,18 +1,33 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <img src="image01.webp" class="logo" alt="" />
+        <a class="navbar-brand" href="{{ route('index') }}">
+            <img src="{{ asset('storage/img/image01.webp') }}" class="logo" alt="" />
             Корочки.есть
         </a>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-underline">
+                @if (Auth::user()->role == 'admin')
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Заявки</a>
+                    <a class="nav-link" href="{{ route('index') }}">Заявки</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Курсы</a>
+                    <a class="nav-link" href="{{ route('coursesGet') }}">Курсы</a>
                 </li>
+                @else
+
+                <li class="nav-item">
+                    <a class="nav-link"
+                        href="#">Мои заявки</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link"
+                        href="#">Сформировать заявку</a>
+                </li>
+                @endif
+
+
             </ul>
             <button
                 class="btn btn-dark"
@@ -44,9 +59,9 @@
                     aria-label="Закрыть"></button>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger btn-lg w-100">
+                <a href="{{ route('logout') }}" type="button" class="btn btn-danger btn-lg w-100">
                     Выйти
-                </button>
+                </a>
                 <button
                     type="button"
                     class="btn btn-secondary btn-lg w-100"

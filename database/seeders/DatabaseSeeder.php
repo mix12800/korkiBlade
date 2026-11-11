@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Course;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -35,8 +36,34 @@ class DatabaseSeeder extends Seeder
             // ],
         ];
 
+        $sourse = [
+            "Шахматы",
+            "Шашки",
+            "Го",
+            "Карточные игры",
+            "Настольный теннис",
+            "Баскетбол",
+            "Волейбол",
+            "Художественная гимнастика",
+            "Рисование акварелью",
+            "Рисование маслом",
+            "Лепка из глины",
+            "Бисероплетение",
+            "Вышивание",
+            "Вязание",
+            "Бадминтон",
+            "Йога",
+            "Плавание",
+        ];
+
         foreach ($users as $user) {
             User::create($user);
+        }
+
+        foreach ($sourse as $value) {
+            Course::create([
+                'name' => $value,
+            ]);
         }
     }
 }

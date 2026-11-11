@@ -7,8 +7,9 @@
         <input
             type="text"
             class="form-control focus-ring focus-ring-dark border @error('login') is-invalid  @enderror"
-            
+            name="login"
             id="login"
+            value="{{ old('login') }}"
             placeholder="login" />
         <label for="login">Логин</label>
         @error('login')
@@ -21,7 +22,9 @@
         <input
             type="password"
             class="form-control focus-ring focus-ring-dark border @error('login') is-invalid  @enderror"
+            name="password"
             id="password"
+            value="{{ old('password') }}"
             placeholder="password" />
         <label for="password">Пароль</label>
         @error('password')

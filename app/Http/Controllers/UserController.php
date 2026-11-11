@@ -7,13 +7,24 @@ use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
 
+    public function logout() {
+        Auth::logout();
+        return redirect()->route('index');
+    }
+
     public function auth(AuthRrequest $request)
     {
-        // 
+        $user = User::where('login', $request->login)->first();
+        if ($user && Hash::check($request->password, $user->password)) {
+            Auth::login($user);
+            return redirect()->route("index");
+        }
+        return back()->withErrors(['login' => 'Ошибка входа'])->withInput();
     }
 
     public function reg(StoreUserRequest $request)
