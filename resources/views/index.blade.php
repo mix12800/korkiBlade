@@ -7,7 +7,12 @@
     @auth
     <x-header />
 
-    <x-orders />
+    @if (Auth::user()->role == 'admin')
+    <x-orders :orders="$orders" />
+    @else
+    <x-my-orders :myOrders="$myOrders" />
+    @endif
+
     @else
     <x-auth />
     @endauth

@@ -14,7 +14,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::get();
+        $courses = Course::orderBy('created_at', 'desc')->get();
         if (Auth::user()->role == 'admin') {
             return view('courses', compact('courses'));
         }
@@ -58,7 +58,12 @@ class CourseController extends Controller
      */
     public function update(UpdateCourseRequest $request, Course $course)
     {
-        //
+        $course_old = Course::where('name', $request->name)->first();
+        if ($course_old && $course_old->id != $course->id) {
+            return back()->withErrors(['name' => 'Такое значение поля Название уже существует.'])->withInput();
+        }
+        $course->update($request->all());
+        return redirect()->route('coursesGet');
     }
 
     /**
@@ -66,6 +71,7 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
-        return $course;
+        $course->delete();
+        return redirect()->route('coursesGet');
     }
 }

@@ -2,12 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CommentRequest;
 use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
+
+    public function OrderСomment(CommentRequest $request, Order $order)
+    {
+        $order->comment = $request->comment;
+        $order->save();
+        return redirect()->route('index');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -29,7 +38,12 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-        //
+        if (Order::where('user_id', Auth::id())->where('course_id', $request->course_id)->first()) {
+            return back()->withErrors(['course_id' => 'Вы уже записаны на этот курс'])->withInput();
+        }
+
+        Order::create(array_merge($request->all(), ['user_id' => Auth::id()]));
+        return redirect()->route("index");
     }
 
     /**
@@ -53,7 +67,9 @@ class OrderController extends Controller
      */
     public function update(UpdateOrderRequest $request, Order $order)
     {
-        //
+        $order->status = $request->status;
+        $order->save();
+        return redirect()->route('index');
     }
 
     /**
@@ -61,6 +77,7 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        //
+        $order->delete();
+        return redirect()->route('index');
     }
 }

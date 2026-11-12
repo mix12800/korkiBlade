@@ -6,14 +6,16 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Orders extends Component
+class orders extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public $orders;
+
+    public function __construct($orders)
     {
-        //
+        $this->orders = $orders;
     }
 
     /**

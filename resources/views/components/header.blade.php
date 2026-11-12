@@ -18,12 +18,12 @@
 
                 <li class="nav-item">
                     <a class="nav-link"
-                        href="#">Мои заявки</a>
+                        href="{{ route('index') }}">Мои заявки</a>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link"
-                        href="#">Сформировать заявку</a>
+                        href="{{ route('OrderAddPage') }}">Сформировать заявку</a>
                 </li>
                 @endif
 
